@@ -28,10 +28,6 @@ public class NonLand extends Card {
         this.type = type;
     }
 
-    public int getManaValue() {
-        return this.manaCost.size();
-    }
-
     public String getManaCost() {
 
         StringBuilder output = new StringBuilder();
@@ -42,6 +38,22 @@ public class NonLand extends Card {
             output.append(Collections.frequency(this.manaCost, color)).append(" ").append(color.toString());
         }
         return output.toString();
+    }
+
+    public void setManaCost(List<Color> manaCost) {
+        this.manaCost = manaCost;
+    }
+
+    public CardType getType() {
+        return type;
+    }
+
+    public void setType(CardType type) {
+        this.type = type;
+    }
+
+    public int getManaValue() {
+        return this.manaCost.size();
     }
 
     @Override

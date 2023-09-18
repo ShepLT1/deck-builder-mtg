@@ -22,6 +22,14 @@ public class Land extends Card {
         this.colors = colors;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setColors(List<Color> colors) {
+        this.colors = colors;
+    }
+
     @Override
     public List<Color> getColors() {
         return this.colors;
@@ -29,6 +37,6 @@ public class Land extends Card {
 
     @Override
     public String toString() {
-        return super.toString() + String.format("Colors = %s%n", this.colors);
+        return super.toString() + String.format("Card Type = Land%nColors = %s%n", this.colors);
     }
 }
