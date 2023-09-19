@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class Card {
 
     private @Id @GeneratedValue Long id;
+    @Column(unique = true)
     protected String name;
     protected List<String> abilities;
 
