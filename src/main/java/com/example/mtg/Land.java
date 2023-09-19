@@ -31,6 +31,11 @@ public class Land extends Card {
     }
 
     @Override
+    public int getManaValue() {
+        return 0;
+    }
+
+    @Override
     public List<Color> getColors() {
         return this.colors;
     }
