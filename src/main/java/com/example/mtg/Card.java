@@ -1,9 +1,17 @@
 package com.example.mtg;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+
 import java.util.List;
 
+@Entity
+@Inheritance
 public abstract class Card {
 
+    private @Id @GeneratedValue Long id;
     protected String name;
     protected List<String> abilities;
 
