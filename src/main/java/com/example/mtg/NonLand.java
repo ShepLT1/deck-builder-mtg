@@ -24,7 +24,7 @@ public class NonLand extends Card {
         this.type = type;
     }
 
-    public String getManaCost() {
+    public String getStringManaCost() {
 
         StringBuilder output = new StringBuilder();
         for (Color color : new HashSet<>(this.manaCost)) {
@@ -34,6 +34,10 @@ public class NonLand extends Card {
             output.append(Collections.frequency(this.manaCost, color)).append(" ").append(color.toString());
         }
         return output.toString();
+    }
+
+    public List<Color> getManaCost() {
+        return this.manaCost;
     }
 
     public void setManaCost(List<Color> manaCost) {
@@ -59,6 +63,6 @@ public class NonLand extends Card {
 
     @Override
     public String toString() {
-        return super.toString() + String.format("Card type = %s%nMana Cost = %s%n", this.type, getManaCost());
+        return super.toString() + String.format("Card type = %s%nMana Cost = %s%n", this.type, getStringManaCost());
     }
 }
