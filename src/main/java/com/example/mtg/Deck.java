@@ -3,6 +3,7 @@ package com.example.mtg;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class Deck {
 
     private @Id @GeneratedValue Long id;
     protected String name;
+    @OneToMany
     protected Card[] cardList;
     protected int uniqueCardLimit;
     protected List<Color> colors;
