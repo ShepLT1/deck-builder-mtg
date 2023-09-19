@@ -22,10 +22,6 @@ public class Land extends Card {
         this.colors = colors;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setColors(List<Color> colors) {
         this.colors = colors;
     }
