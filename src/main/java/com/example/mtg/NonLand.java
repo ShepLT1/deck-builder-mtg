@@ -17,10 +17,6 @@ public class NonLand extends Card {
     private List<Color> manaCost;
     private CardType type;
 
-    public NonLand(String name, List<Color> manaCost, CardType type) {
-        this(name, new ArrayList<>(), manaCost, type);
-    }
-
     public NonLand(String name, List<String> abilities, List<Color> manaCost, CardType type) {
         super(name, abilities);
         Collections.sort(manaCost);
