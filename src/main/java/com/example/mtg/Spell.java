@@ -1,5 +1,6 @@
 package com.example.mtg;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import java.util.*;
 
 @Entity
+@DiscriminatorValue("Spell")
 public class Spell extends Card {
 
     public enum CardType {

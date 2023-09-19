@@ -1,14 +1,12 @@
 package com.example.mtg;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
-@Inheritance
+@Entity(name="cards")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="basic_card_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Card {
 
     private @Id @GeneratedValue Long id;

@@ -1,5 +1,6 @@
 package com.example.mtg;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue("Land")
 public class Land extends Card {
 
     private @Id @GeneratedValue Long id;
