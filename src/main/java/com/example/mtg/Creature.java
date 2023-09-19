@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,10 +20,7 @@ public class Creature extends NonLand {
     private List<Attribute> attributes;
 
     public Creature(String name, List<Color> manaCost, int power, int toughness, List<Attribute> attributes) {
-        super(name, manaCost, CardType.CREATURE);
-        this.power = power;
-        this.toughness = toughness;
-        this.attributes = attributes;
+        this(name, new ArrayList<>(), manaCost, power, toughness, attributes);
     }
 
     public Creature(String name, List<String> abilities, List<Color> manaCost, int power, int toughness, List<Attribute> attributes) {
