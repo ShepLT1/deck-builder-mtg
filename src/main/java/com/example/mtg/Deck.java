@@ -1,12 +1,18 @@
 package com.example.mtg;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
 public class Deck {
 
+    private @Id @GeneratedValue Long id;
     protected String name;
     protected Card[] cardList;
     protected int uniqueCardLimit;
