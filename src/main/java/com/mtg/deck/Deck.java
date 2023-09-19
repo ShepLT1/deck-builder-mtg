@@ -1,5 +1,7 @@
-package com.example.mtg;
+package com.mtg.deck;
 
+import com.mtg.Color;
+import com.mtg.card.base.Card;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

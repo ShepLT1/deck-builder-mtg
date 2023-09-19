@@ -1,5 +1,6 @@
-package com.example.mtg;
+package com.mtg.card.base;
 
+import com.mtg.Color;
 import jakarta.persistence.*;
 
 import java.util.List;

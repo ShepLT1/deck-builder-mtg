@@ -1,5 +1,7 @@
-package com.example.mtg;
+package com.mtg.card.spell.creature;
 
+import com.mtg.Color;
+import com.mtg.card.spell.Spell;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

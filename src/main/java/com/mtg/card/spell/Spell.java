@@ -1,5 +1,7 @@
-package com.example.mtg;
+package com.mtg.card.spell;
 
+import com.mtg.Color;
+import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
