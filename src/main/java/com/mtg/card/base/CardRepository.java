@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    Optional<Card> findByName(String name);
+    Optional<Card> findByNameIgnoreCase(String name);
 
 }
