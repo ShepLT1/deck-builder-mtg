@@ -2,12 +2,12 @@ package com.mtg;
 
 public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(Long id, String type) {
-        super("Could not find " + type + " with id = " + id);
+    public EntityNotFoundException(Long id, String className) {
+        super("Could not find " + className + " with id = " + id);
     }
 
-    public EntityNotFoundException(String name, String type) {
-        super("Could not find " + type + " with name = " + name);
+    public EntityNotFoundException(String name, String className) {
+        super("Could not find " + className + " with name = " + name);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mtg.card.base;
 
+import com.mtg.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,19 +21,19 @@ class CardBaseController {
         if (name == null) {
             return repository.findAll();
         }
-        return repository.findByNameIgnoreCase(name).orElseThrow(() -> new CardNotFoundException(name));
+        return repository.findByNameIgnoreCase(name).orElseThrow(() -> new EntityNotFoundException(name, this.getClass().getSimpleName()));
     }
     // end::get-aggregate-root[]
 
     @GetMapping("/{id}")
     Card one(@PathVariable Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new CardNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(id, this.getClass().getSimpleName()));
     }
 
     @DeleteMapping("/{id}")
     void deleteCard(@PathVariable Long id) {
-        repository.delete(repository.findById(id).orElseThrow(() -> new CardNotFoundException(id)));
+        repository.delete(repository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, this.getClass().getSimpleName())));
     }
 
 }
