@@ -59,7 +59,7 @@ public class Deck {
 
     private boolean hasValidColors(Card card) {
         for (Color color : card.getColors()) {
-            if (color.equals(Color.ANY_COLOR)) {
+            if (color.equals(Color.ANY)) {
                 continue;
             }
             if (!getColors().contains(color)) {
