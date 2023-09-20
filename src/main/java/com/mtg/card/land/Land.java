@@ -15,6 +15,8 @@ public class Land extends Card {
 
     private List<Color> colors;
 
+    public Land() {}
+
     public Land(String name, List<Color> colors) {
         this(name, new ArrayList<>(), colors);
     }

@@ -18,6 +18,8 @@ public class Creature extends Spell {
     private int toughness;
     private List<Attribute> attributes;
 
+    public Creature() {}
+
     public Creature(String name, List<Color> manaCost, int power, int toughness, List<Attribute> attributes) {
         this(name, new ArrayList<>(), manaCost, power, toughness, attributes);
     }

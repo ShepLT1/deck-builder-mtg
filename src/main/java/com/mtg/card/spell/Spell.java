@@ -18,6 +18,8 @@ public class Spell extends Card {
     private List<Color> manaCost;
     private CardType type;
 
+    public Spell() {}
+
     public Spell(String name, List<String> abilities, List<Color> manaCost, CardType type) {
         super(name, abilities);
         Collections.sort(manaCost);
