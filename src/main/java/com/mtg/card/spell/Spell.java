@@ -4,8 +4,6 @@ import com.mtg.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 import java.util.*;
 
@@ -17,7 +15,6 @@ public class Spell extends Card {
         INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE
     }
 
-    private @Id @GeneratedValue Long id;
     private List<Color> manaCost;
     private CardType type;
 

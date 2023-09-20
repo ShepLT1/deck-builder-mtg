@@ -10,14 +10,22 @@ import java.util.List;
 @DiscriminatorColumn(name="basic_card_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Card {
 
-    private @Id @GeneratedValue Long id;
+    protected @Id @GeneratedValue Long id;
     @Column(unique = true)
     protected String name;
     protected List<String> abilities;
 
+    public Card() {
+
+    }
+
     public Card(String name, List<String> abilities) {
         this.name = name;
         this.abilities = abilities;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

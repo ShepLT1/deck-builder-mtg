@@ -1,11 +1,10 @@
 package com.mtg.card.land;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.mtg.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +13,13 @@ import java.util.List;
 @DiscriminatorValue("Land")
 public class Land extends Card {
 
-    private @Id @GeneratedValue Long id;
     private List<Color> colors;
 
     public Land(String name, List<Color> colors) {
         this(name, new ArrayList<>(), colors);
     }
 
+    @JsonCreator
     public Land(String name, List<String> abilities, List<Color> colors) {
         super(name, abilities);
         this.colors = colors;

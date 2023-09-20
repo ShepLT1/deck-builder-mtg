@@ -3,8 +3,6 @@ package com.mtg.card.spell.creature;
 import com.mtg.Color;
 import com.mtg.card.spell.Spell;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ public class Creature extends Spell {
         DEATHTOUCH, DOUBLE_STRIKE, FIRST_STRIKE, FLYING, HASTE, LIFELINK, MENACE, REACH, TRAMPLE, VIGILANCE
     }
 
-    private @Id @GeneratedValue Long id;
     private int power;
     private int toughness;
     private List<Attribute> attributes;
@@ -30,6 +27,10 @@ public class Creature extends Spell {
         this.power = power;
         this.toughness = toughness;
         this.attributes = attributes;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public int getPower() {
