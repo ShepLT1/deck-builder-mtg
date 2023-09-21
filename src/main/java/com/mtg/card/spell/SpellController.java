@@ -1,5 +1,6 @@
 package com.mtg.card.spell;
 
+import com.mtg.error.InvalidCardTypeException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,17 @@ class SpellController {
 
     @PostMapping("")
     Spell newSpell(@RequestBody Spell newSpell) {
+        if (newSpell.getType().equals(Spell.CardType.CREATURE)) {
+            throw new InvalidCardTypeException(Spell.CardType.CREATURE, newSpell.getClass().getSimpleName());
+        }
         return repository.save(newSpell);
     }
 
     @PutMapping("/{id}")
     Spell replaceSpell(@RequestBody Spell newSpell, @PathVariable Long id) {
-
+        if (newSpell.getType().equals(Spell.CardType.CREATURE)) {
+            throw new InvalidCardTypeException(Spell.CardType.CREATURE, newSpell.getClass().getSimpleName());
+        }
         return repository.findById(id)
                 .map(spell -> {
                     spell.setName(newSpell.getName());

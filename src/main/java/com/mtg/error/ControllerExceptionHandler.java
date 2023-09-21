@@ -38,4 +38,10 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    @ExceptionHandler(InvalidCardTypeException.class)
+    public ResponseEntity<ErrorMessage> InvalidCardTypeException(InvalidCardTypeException e, HttpServletRequest request) {
+        ErrorMessage message = new ErrorMessage(new Date(), HttpStatus.BAD_REQUEST.value(), e.getMessage(), request.getRequestURI());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
 }
