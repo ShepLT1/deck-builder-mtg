@@ -1,4 +1,4 @@
-package com.mtg;
+package com.mtg.error;
 
 public class EntityNotFoundException extends RuntimeException {
 

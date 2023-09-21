@@ -1,6 +1,6 @@
 package com.mtg.card.base;
 
-import com.mtg.EntityNotFoundException;
+import com.mtg.error.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
