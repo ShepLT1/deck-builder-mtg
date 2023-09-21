@@ -1,6 +1,8 @@
 package com.mtg.card.spell;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mtg.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
@@ -38,13 +40,14 @@ public class Spell extends Card {
     public Spell() {}
 
     @JsonCreator
-    public Spell(String name, List<String> abilities, List<Color> manaCost, CardType type) {
+    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<Color> manaCost, @JsonProperty(value = "type", required = true) CardType type) {
         super(name, abilities);
         Collections.sort(manaCost);
         this.manaCost = manaCost;
         this.type = type;
     }
 
+    @JsonIgnore
     public String getStringManaCost() {
 
         StringBuilder output = new StringBuilder();
@@ -70,13 +73,19 @@ public class Spell extends Card {
     }
 
     public void setType(CardType type) {
-        this.type = type;
+        if (getClass().getSimpleName().equalsIgnoreCase("creature")) {
+            this.type = CardType.CREATURE;
+        } else {
+            this.type = type;
+        }
     }
 
+    @JsonIgnore
     public int getManaValue() {
         return this.manaCost.size();
     }
 
+    @JsonIgnore
     @Override
     public List<Color> getColors() {
         return new ArrayList<>(new LinkedHashSet<>(this.manaCost));

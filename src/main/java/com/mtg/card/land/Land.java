@@ -1,6 +1,7 @@
 package com.mtg.card.land;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mtg.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
@@ -22,7 +23,7 @@ public class Land extends Card {
     }
 
     @JsonCreator
-    public Land(String name, List<String> abilities, List<Color> colors) {
+    public Land(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "colors", required = true) List<Color> colors) {
         super(name, abilities);
         this.colors = colors;
     }
