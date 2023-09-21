@@ -2,6 +2,8 @@ package com.mtg;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.util.Arrays;
+
 public enum Color {
     ANY, COLORLESS, WHITE, BLUE, BLACK, RED, GREEN;
 
@@ -12,7 +14,7 @@ public enum Color {
                 return c;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Unaccepted Color value. Excepted Color values (case insensitive) = " + Arrays.toString(Color.values()));
     }
 
     @Override

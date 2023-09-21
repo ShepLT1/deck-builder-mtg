@@ -1,17 +1,34 @@
 package com.mtg.card.spell.creature;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.mtg.Color;
 import com.mtg.card.spell.Spell;
 import jakarta.persistence.Entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
 public class Creature extends Spell {
 
     public enum Attribute {
-        DEATHTOUCH, DOUBLE_STRIKE, FIRST_STRIKE, FLYING, HASTE, LIFELINK, MENACE, REACH, TRAMPLE, VIGILANCE
+        DEATHTOUCH, DOUBLE_STRIKE, FIRST_STRIKE, FLYING, HASTE, LIFELINK, MENACE, REACH, TRAMPLE, VIGILANCE;
+
+        @JsonCreator
+        public static Attribute fromText(String text) {
+            for (Attribute c : Attribute.values()) {
+                if (c.name().equals(text.toUpperCase())) {
+                    return c;
+                }
+            }
+            throw new IllegalArgumentException("Unaccepted Attribute value. Excepted CardType values (case insensitive) = " + Arrays.toString(Attribute.values()));
+        }
+
+        @Override
+        public String toString() {
+            return name();
+        }
     }
 
     private int power;
@@ -24,6 +41,7 @@ public class Creature extends Spell {
         this(name, new ArrayList<>(), manaCost, power, toughness, attributes);
     }
 
+    @JsonCreator
     public Creature(String name, List<String> abilities, List<Color> manaCost, int power, int toughness, List<Attribute> attributes) {
         super(name, abilities, manaCost, CardType.CREATURE);
         this.power = power;
