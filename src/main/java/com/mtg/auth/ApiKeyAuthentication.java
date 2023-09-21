@@ -1,4 +1,4 @@
-package com.mtg;
+package com.mtg.auth;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.mtg;
+package com.mtg.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

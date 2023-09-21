@@ -1,4 +1,4 @@
-package com.mtg;
+package com.mtg.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.BadCredentialsException;
