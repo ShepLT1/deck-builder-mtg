@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Card {
 
     protected @Id @GeneratedValue Long id;
-    @Column(unique = true)
+    @Column(unique = true, name = "IX_NAME")
     protected String name;
     protected List<String> abilities;
 
