@@ -1,6 +1,5 @@
 package com.mtg.card.base;
 
-import com.mtg.deck.DeckRepository;
 import com.mtg.deck.DeckService;
 import com.mtg.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,6 @@ class CardBaseController {
 
     @Autowired
     CardRepository cardRepository;
-
-    @Autowired
-    DeckRepository deckRepository;
 
     @Autowired
     DeckService deckService;
