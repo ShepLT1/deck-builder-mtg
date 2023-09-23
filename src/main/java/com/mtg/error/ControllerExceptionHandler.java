@@ -44,4 +44,10 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorMessage> IllegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+        ErrorMessage message = new ErrorMessage(new Date(), HttpStatus.CONFLICT.value(), e.getMessage(), request.getRequestURI());
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
+
 }

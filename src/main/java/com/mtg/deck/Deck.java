@@ -1,29 +1,35 @@
 package com.mtg.deck;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.mtg.Color;
 import com.mtg.card.base.Card;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties(value = {"cardLimit", "uniqueCardLimit"})
 public class Deck {
 
     private @Id @GeneratedValue Long id;
-    protected String name;
-    @OneToMany
-    protected List<Card> cardList;
-    protected int cardLimit;
-    protected int uniqueCardLimit;
-    protected List<Color> colors;
+    @Column(unique = true, name = "IX_NAME")
+    private String name;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "deck_card",
+            joinColumns = @JoinColumn(name = "deck_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id"))
+    private List<Card> cardList;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private int cardLimit;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private int uniqueCardLimit;
+    private List<Color> colors;
+
+    public Deck() {
+    }
 
     @JsonCreator
     public Deck(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "colors", required = true) List<Color> colors) {
@@ -36,6 +42,10 @@ public class Deck {
         this.cardLimit = cardLimit;
         this.uniqueCardLimit = uniqueCardLimit;
         this.colors = colors;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -54,12 +64,21 @@ public class Deck {
         this.cardList = cardList;
     }
 
+    public int getCardLimit() {
+        return cardLimit;
+    }
+
+    public int getUniqueCardLimit() {
+        return uniqueCardLimit;
+    }
+
     public List<Color> getColors() {
         return colors;
     }
 
-    public void setColors(List<Color> colors) {
-        this.colors = colors;
+    @PreRemove
+    private void removeListsFromDeck() {
+        getCardList().clear();
     }
 
     @JsonIgnore
@@ -69,7 +88,6 @@ public class Deck {
                 continue;
             }
             if (!getColors().contains(color)) {
-                System.out.println(">>>>> Card " + card.getName() + " " + card.getColors() + " contains colors not in deck " + name + " " + colors);
                 return false;
             }
         }
@@ -77,14 +95,17 @@ public class Deck {
     }
 
     @JsonIgnore
-    public boolean addCard(Card card) {
-        if (hasValidColors(card) && cardList.size() < cardLimit && !hasReachedCardLimit(card)) {
-            cardList.add(card);
-            return true;
+    public void addCard(Card card) {
+        if (!hasValidColors(card)) {
+            throw new IllegalArgumentException("Unable to add card " + card.getName() + " " + card.getColors() + " to deck " + name + " " + colors + ". Card contains colors not in deck.");
         }
-        System.out.println(">>>>> Unable to add card to deck");
-        System.out.println();
-        return false;
+        if (cardList.size() >= cardLimit) {
+            throw new IllegalArgumentException("Unable to add card " + card.getName() + " to deck " + name + ". Deck is full.");
+        }
+        if (hasReachedCardLimit(card)) {
+            throw new IllegalArgumentException("Unable to add card " + card.getName() + " to deck " + name + ". Deck already contains the maximum of " + uniqueCardLimit + " instances of this card.");
+        }
+        cardList.add(card);
     }
 
     @JsonIgnore
@@ -95,10 +116,7 @@ public class Deck {
     @JsonIgnore
     private boolean hasReachedCardLimit(Card card) {
         if (!(card.getClass().getSimpleName().equalsIgnoreCase("land") && card.getName().toLowerCase().contains("basic"))) {
-            if (Collections.frequency(cardList, card) >= uniqueCardLimit) {
-                System.out.println(">>>>> Deck " + name + " already contains " + uniqueCardLimit + " cards named " + card.getName());
-                return true;
-            }
+            return Collections.frequency(cardList, card) >= uniqueCardLimit;
         }
         return false;
     }

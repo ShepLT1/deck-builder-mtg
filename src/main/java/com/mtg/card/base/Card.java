@@ -1,8 +1,11 @@
 package com.mtg.card.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mtg.Color;
+import com.mtg.deck.Deck;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="cards")
@@ -12,8 +15,12 @@ public abstract class Card {
 
     protected @Id @GeneratedValue Long id;
     @Column(unique = true, name = "IX_NAME")
-    protected String name;
-    protected List<String> abilities;
+    private String name;
+    private List<String> abilities;
+    @ManyToMany(mappedBy = "cardList")
+    @JsonIgnore
+    private List<Deck> deckList;
+
 
     public Card() {
 
@@ -22,6 +29,15 @@ public abstract class Card {
     public Card(String name, List<String> abilities) {
         this.name = name;
         this.abilities = abilities;
+        this.deckList = new ArrayList<>();
+    }
+
+    public List<Deck> getDeckList() {
+        return deckList;
+    }
+
+    public void setDeckList(List<Deck> deckList) {
+        this.deckList = deckList;
     }
 
     public Long getId() {
