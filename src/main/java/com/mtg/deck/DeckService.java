@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,7 +34,12 @@ public class DeckService {
         cardIdList.forEach(id -> longCardIds.add(Long.valueOf(id)));
         List<Card> cardsToPut = cardRepository.findByIdIn(longCardIds);
         deck.setCardList(new ArrayList<>());
-        cardsToPut.forEach(deck::addCard);
+        cardsToPut.forEach(card -> {
+            int frequency = Collections.frequency(longCardIds, card.getId());
+            for (int i = 0; i < frequency; i++) {
+                deck.addCard(card);
+            }
+        });
     }
 
 }
