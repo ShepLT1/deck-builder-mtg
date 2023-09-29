@@ -30,16 +30,18 @@ public class DeckService {
     }
 
     public void updateCardList(Deck deck, List<Integer> cardIdList) {
-        List<Long> longCardIds = new ArrayList<>();
-        cardIdList.forEach(id -> longCardIds.add(Long.valueOf(id)));
-        List<Card> cardsToPut = cardRepository.findByIdIn(longCardIds);
-        deck.setCardList(new ArrayList<>());
-        cardsToPut.forEach(card -> {
-            int frequency = Collections.frequency(longCardIds, card.getId());
-            for (int i = 0; i < frequency; i++) {
-                deck.addCard(card);
-            }
-        });
+        if (cardIdList != null) {
+            List<Long> longCardIds = new ArrayList<>();
+            cardIdList.forEach(id -> longCardIds.add(Long.valueOf(id)));
+            List<Card> cardsToPut = cardRepository.findByIdIn(longCardIds);
+            deck.setCardList(new ArrayList<>());
+            cardsToPut.forEach(card -> {
+                int frequency = Collections.frequency(longCardIds, card.getId());
+                for (int i = 0; i < frequency; i++) {
+                    deck.addCard(card);
+                }
+            });
+        }
     }
 
 }
