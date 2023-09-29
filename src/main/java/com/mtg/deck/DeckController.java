@@ -1,10 +1,13 @@
 package com.mtg.deck;
 
+import com.mtg.card.base.CardRepository;
 import com.mtg.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/decks")
@@ -12,7 +15,8 @@ class DeckController {
 
     @Autowired
     DeckRepository deckRepository;
-
+    @Autowired
+    CardRepository cardRepository;
     @Autowired
     DeckService deckService;
 
@@ -52,6 +56,11 @@ class DeckController {
         deck.setName(partialDeck.getName());
         deckService.updateCardList(deck, partialDeck.getCardList());
         return deckRepository.save(deck);
+    }
+
+    @PatchMapping("/{deck_id}/cards/{card_id}")
+    Deck addOrRemoveCard(@PathVariable Long deck_id, @PathVariable Long card_id, @RequestBody Map<String, String> fields) {
+        return deckService.addOrRemoveCard(deck_id, card_id, fields);
     }
 
     @DeleteMapping("/{id}")

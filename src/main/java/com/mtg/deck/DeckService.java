@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DeckService {
@@ -42,6 +43,20 @@ public class DeckService {
                 }
             });
         }
+    }
+
+    public Deck addOrRemoveCard(Long deck_id, Long card_id, Map<String, String> fields) {
+        if (!fields.containsKey("action") || (!fields.get("action").equals("add") && !fields.get("action").equals("remove"))) {
+            throw new IllegalArgumentException("request body must contain 'action' field with value equal to either 'add' or 'remove'");
+        }
+        Deck deck = deckRepository.findById(deck_id).orElseThrow(() -> new EntityNotFoundException(deck_id, "deck"));
+        Card card = cardRepository.findById(card_id).orElseThrow(() -> new EntityNotFoundException(card_id, "card"));
+        if (fields.get("action").equals("add")) {
+            deck.addCard(card);
+        } else {
+            deck.removeCard(card);
+        }
+        return deckRepository.save(deck);
     }
 
 }
