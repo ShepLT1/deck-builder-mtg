@@ -1,8 +1,8 @@
 package com.mtg.card.land;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cards/lands")
@@ -18,8 +18,8 @@ class LandController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("")
-    List<Land> all() {
-        return repository.findAll();
+    Page<Land> all(Pageable pageable) {
+        return repository.findAll(pageable);
     }
     // end::get-aggregate-root[]
 

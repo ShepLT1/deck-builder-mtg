@@ -3,6 +3,8 @@ package com.mtg.card.base;
 import com.mtg.deck.DeckService;
 import com.mtg.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,21 +13,20 @@ class CardBaseController {
 
     @Autowired
     CardRepository cardRepository;
-
     @Autowired
     DeckService deckService;
 
-
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("")
-    Object all(@RequestParam(required=false) String name) {
-        if (name == null) {
-            return cardRepository.findAll();
+    Page<Card> all(@RequestParam(required=false) String name, Pageable pageable) {
+        if (name != null) {
+            Page<Card> cardsByName = cardRepository.findByNameIgnoreCase(name, pageable);
+            if (!cardsByName.hasContent()) {
+                throw new EntityNotFoundException(name, "card");
+            }
+            return cardsByName;
         }
-        return cardRepository.findByNameIgnoreCase(name).orElseThrow(() -> new EntityNotFoundException(name, "card"));
+        return cardRepository.findAll(pageable);
     }
-    // end::get-aggregate-root[]
 
     @GetMapping("/{id}")
     Card one(@PathVariable Long id) {

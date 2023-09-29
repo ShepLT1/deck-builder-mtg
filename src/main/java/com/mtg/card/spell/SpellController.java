@@ -1,9 +1,9 @@
 package com.mtg.card.spell;
 
 import com.mtg.error.InvalidCardTypeException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cards/spells")
@@ -19,8 +19,8 @@ class SpellController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("")
-    List<Spell> all() {
-        return repository.findAll();
+    Page<Spell> all(Pageable pageable) {
+        return repository.findAll(pageable);
     }
     // end::get-aggregate-root[]
 

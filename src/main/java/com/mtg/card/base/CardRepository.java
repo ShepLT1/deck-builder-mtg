@@ -1,13 +1,14 @@
 package com.mtg.card.base;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    Optional<Card> findByNameIgnoreCase(String name);
+    Page<Card> findByNameIgnoreCase(String name, Pageable pageable);
 
     List<Card> findByIdIn(List<Long> idList);
 
