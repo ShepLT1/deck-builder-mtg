@@ -121,6 +121,14 @@ public class Deck {
         return false;
     }
 
+    @JsonIgnore
+    public void removeCard(Card card) {
+        int lastIndex = this.cardList.lastIndexOf(card);
+        if (lastIndex >= 0) {
+            this.cardList.remove(lastIndex);
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("DECK%nName = %s%nColors = %s%nCard List = %s%n", name, colors, cardList);
