@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    Page<Card> findByNameIgnoreCase(String name, Pageable pageable);
+    Page<Card> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
     List<Card> findByIdIn(List<Long> idList);
 

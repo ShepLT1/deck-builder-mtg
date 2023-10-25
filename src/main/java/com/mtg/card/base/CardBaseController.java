@@ -19,7 +19,7 @@ class CardBaseController {
     @GetMapping("")
     Page<Card> all(@RequestParam(required=false) String name, Pageable pageable) {
         if (name != null) {
-            Page<Card> cardsByName = cardRepository.findByNameIgnoreCase(name, pageable);
+            Page<Card> cardsByName = cardRepository.findByNameContainingIgnoreCase(name, pageable);
             if (!cardsByName.hasContent()) {
                 throw new EntityNotFoundException(name, "card");
             }
