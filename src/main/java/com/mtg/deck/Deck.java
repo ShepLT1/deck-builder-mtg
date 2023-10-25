@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Entity
+@Entity(name="decks")
 @JsonIgnoreProperties(value = {"cardLimit", "uniqueCardLimit"})
 public class Deck {
 
