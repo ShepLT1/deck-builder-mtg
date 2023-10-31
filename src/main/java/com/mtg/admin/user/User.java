@@ -1,5 +1,6 @@
-package com.mtg.user;
+package com.mtg.user_management.user;
 
+import com.mtg.user_management.role.Role;
 import jakarta.persistence.*;
 
 import java.util.Collection;
