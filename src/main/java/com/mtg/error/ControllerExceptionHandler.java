@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -46,6 +47,23 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorMessage> IllegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+        ErrorMessage message = new ErrorMessage(new Date(), HttpStatus.CONFLICT.value(), e.getMessage(), request.getRequestURI());
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorMessage> MethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        System.out.println(e.getFieldError().getDefaultMessage());
+        String errorMessage = String.valueOf(e.getFieldError());
+        if (e.getFieldError().getDefaultMessage() != null) {
+            errorMessage = e.getFieldError().getDefaultMessage();
+        }
+        ErrorMessage message = new ErrorMessage(new Date(), HttpStatus.BAD_REQUEST.value(), errorMessage, request.getRequestURI());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RecordAlreadyExistsException.class)
+    public ResponseEntity<ErrorMessage> RecordAlreadyExistsException(RecordAlreadyExistsException e, HttpServletRequest request) {
         ErrorMessage message = new ErrorMessage(new Date(), HttpStatus.CONFLICT.value(), e.getMessage(), request.getRequestURI());
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
