@@ -1,28 +1,29 @@
-package com.mtg.user_management.role;
+package com.mtg.admin.role;
 
-import com.mtg.user_management.privilege.Privilege;
-import com.mtg.user_management.user.User;
+import com.mtg.admin.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Collection;
+import java.util.List;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Role {
-
+@Table(name="roles")
+public class Role
+{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable=false, unique=true)
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
 
-    @ManyToMany
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges;
+    @ManyToMany(mappedBy="roles")
+    private List<User> users;
 }
