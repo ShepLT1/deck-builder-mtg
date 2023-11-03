@@ -1,5 +1,6 @@
 package com.mtg.admin.role;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mtg.admin.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,6 @@ public class Role
     private String name;
 
     @ManyToMany(mappedBy="roles")
+    @JsonIgnore
     private List<User> users;
 }
