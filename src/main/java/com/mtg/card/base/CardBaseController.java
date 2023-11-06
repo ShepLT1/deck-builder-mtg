@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/api/cards")
 class CardBaseController {
 
     @Autowired

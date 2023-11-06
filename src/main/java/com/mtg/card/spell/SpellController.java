@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cards/spells")
+@RequestMapping("/api/cards/spells")
 class SpellController {
 
     private final SpellRepository repository;

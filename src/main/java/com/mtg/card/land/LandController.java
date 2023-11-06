@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cards/lands")
+@RequestMapping("/api/cards/lands")
 class LandController {
 
     private final LandRepository repository;

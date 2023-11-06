@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cards/creatures")
+@RequestMapping("/api/cards/creatures")
 class CreatureController {
 
     private final CreatureRepository repository;
