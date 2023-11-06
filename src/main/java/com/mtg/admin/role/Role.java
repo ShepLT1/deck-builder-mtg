@@ -1,14 +1,10 @@
 package com.mtg.admin.role;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mtg.admin.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Setter
 @Getter
@@ -20,12 +16,9 @@ public class Role
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(nullable=false, unique=true)
-    private String name;
-
-    @ManyToMany(mappedBy="roles")
-    @JsonIgnore
-    private List<User> users;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 }
