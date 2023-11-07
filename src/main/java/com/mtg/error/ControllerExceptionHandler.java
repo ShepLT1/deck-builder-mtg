@@ -68,4 +68,14 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(TokenRefreshException.class)
+    public ResponseEntity<ErrorMessage> handleTokenRefreshException(TokenRefreshException ex, HttpServletRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                new Date(),
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(),
+                request.getRequestURI());
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+    }
+
 }
