@@ -65,7 +65,12 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        RefreshToken refreshToken = refreshTokenService.findByUserId(userDetails.getId());
+        try {
+            refreshTokenService.verifyExpiration(refreshToken);
+        } catch (TokenRefreshException e) {
+            refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        }
 
         return ResponseEntity
                 .ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));

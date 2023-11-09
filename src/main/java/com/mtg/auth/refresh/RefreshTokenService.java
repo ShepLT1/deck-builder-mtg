@@ -5,6 +5,7 @@ import com.mtg.error.TokenRefreshException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -24,6 +25,10 @@ public class RefreshTokenService {
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
+    }
+
+    public RefreshToken findByUserId(Long id) {
+        return refreshTokenRepository.findByUserId(id);
     }
 
     public RefreshToken createRefreshToken(Long userId) {
