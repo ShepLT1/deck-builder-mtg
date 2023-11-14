@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DeckBuilderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DeckBuilderApplication.class, args);
+		SpringApplication application = new SpringApplication(DeckBuilderApplication.class);
+		application.run(args);
 	}
 
 }
