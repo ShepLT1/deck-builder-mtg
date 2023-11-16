@@ -69,10 +69,14 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         RefreshToken refreshToken = refreshTokenService.findByUserId(userDetails.getId());
-        try {
-            refreshTokenService.verifyExpiration(refreshToken);
-        } catch (TokenRefreshException e) {
+        if (refreshToken == null) {
             refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        } else {
+            try {
+                refreshTokenService.verifyExpiration(refreshToken);
+            } catch (TokenRefreshException e) {
+                refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+            }
         }
 
         ResponseCookie jwtRefreshCookie = jwtUtils.generateRefreshJwtCookie(refreshToken.getToken());
