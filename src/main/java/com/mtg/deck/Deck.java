@@ -1,5 +1,7 @@
 package com.mtg.deck;
 
+import com.mtg.admin.user.User;
+
 import com.fasterxml.jackson.annotation.*;
 import com.mtg.Color;
 import com.mtg.card.base.Card;
@@ -16,6 +18,11 @@ public class Deck {
     private @Id @GeneratedValue Long id;
     @Column(unique = true, name = "IX_NAME")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable=false)
+    private User user;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "deck_card",
@@ -32,12 +39,13 @@ public class Deck {
     }
 
     @JsonCreator
-    public Deck(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "colors", required = true) List<Color> colors) {
-        this(name,60, 4, colors);
+    public Deck(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "user", required = true) User user, @JsonProperty(value = "colors", required = true) List<Color> colors) {
+        this(name, user, 60, 4, colors);
     }
 
-    public Deck(String name, int cardLimit, int uniqueCardLimit, List<Color> colors) {
+    public Deck(String name, User user, int cardLimit, int uniqueCardLimit, List<Color> colors) {
         this.name = name;
+        this.user = user;
         this.cardList = new ArrayList<>();
         this.cardLimit = cardLimit;
         this.uniqueCardLimit = uniqueCardLimit;
@@ -54,6 +62,14 @@ public class Deck {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Card> getCardList() {

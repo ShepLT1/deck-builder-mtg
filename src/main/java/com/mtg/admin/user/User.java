@@ -1,7 +1,9 @@
 package com.mtg.admin.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mtg.admin.role.Role;
+import com.mtg.deck.Deck;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,11 +41,16 @@ public class User
 
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy="user")
+    @JsonIgnore
+    private Set<Deck> decks = new HashSet<>();
 
     public User(String username, String email, String password) {
         this.username = username;
