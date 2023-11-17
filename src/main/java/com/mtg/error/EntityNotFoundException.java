@@ -10,4 +10,12 @@ public class EntityNotFoundException extends RuntimeException {
         super("Could not find " + className + " with name = " + name);
     }
 
+    public EntityNotFoundException(String username, String name, String className) {
+        super("Could not find " + className + " owned by user " + username + " with name = " + name);
+    }
+
+    public EntityNotFoundException(String username, Long id, String className) {
+        super("Could not find " + className + " owned by user " + username + " with id = " + id);
+    }
+
 }
