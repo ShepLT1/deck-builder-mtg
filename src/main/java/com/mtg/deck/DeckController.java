@@ -1,7 +1,9 @@
 package com.mtg.deck;
 
+import com.mtg.admin.user.User;
 import com.mtg.card.base.CardRepository;
 import com.mtg.error.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,49 +25,76 @@ class DeckController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("")
-    Page<Deck> all(@RequestParam(required=false) String name, Pageable pageable) {
+    Page<Deck> all(HttpServletRequest request, @RequestParam(required=false) String name, Pageable pageable) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
         if (name != null) {
-            Page<Deck> decksByName = deckRepository.findByNameIgnoreCase(name, pageable);
+
+            Page<Deck> decksByName = deckRepository.findByNameIgnoreCaseAndUser(name, user, pageable);
             if (!decksByName.hasContent()) {
-                throw new EntityNotFoundException(name, "deck");
+                throw new EntityNotFoundException(user.getUsername(), name, "deck");
             }
+
             return decksByName;
         }
-        return deckRepository.findAll(pageable);
+
+        return deckRepository.findAllByUser(user, pageable);
     }
     // end::get-aggregate-root[]
 
     @PostMapping("")
-    Deck newDeck(@RequestBody DeckDto preDeck) {
-        Deck newDeck = new Deck(preDeck.getName(), preDeck.getColors());
+    Deck newDeck(HttpServletRequest request, @RequestBody DeckDto preDeck) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
+        Deck newDeck = new Deck(preDeck.getName(), user, preDeck.getColors());
         if (preDeck.getCardList() != null) {
             deckService.updateCardList(newDeck, preDeck.getCardList());
         }
+
         return deckRepository.save(newDeck);
     }
 
     @GetMapping("/{id}")
-    Deck one(@PathVariable Long id) {
-        return deckRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id, "deck"));
+    Deck one(HttpServletRequest request, @PathVariable Long id) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
+        return deckRepository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
     }
 
     @PatchMapping("/{id}")
-    Deck updateDeck(@RequestBody DeckDto partialDeck, @PathVariable Long id) {
-        Deck deck = deckRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "deck"));
+    Deck updateDeck(HttpServletRequest request, @RequestBody DeckDto partialDeck, @PathVariable Long id) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
+        Deck deck = deckRepository.findByIdAndUser(id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
         deck.setName(partialDeck.getName());
         deckService.updateCardList(deck, partialDeck.getCardList());
+
         return deckRepository.save(deck);
     }
 
     @PatchMapping("/{deck_id}/cards/{card_id}")
-    Deck addOrRemoveCard(@PathVariable Long deck_id, @PathVariable Long card_id, @RequestBody Map<String, String> fields) {
-        return deckService.addOrRemoveCard(deck_id, card_id, fields);
+    Deck addOrRemoveCard(HttpServletRequest request, @PathVariable Long deck_id, @PathVariable Long card_id, @RequestBody Map<String, String> fields) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
+        Deck deck = deckRepository.findByIdAndUser(deck_id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), deck_id, "deck"));
+
+        return deckService.addOrRemoveCard(deck, card_id, fields);
     }
 
     @DeleteMapping("/{id}")
-    void deleteDeck(@PathVariable Long id) {
-        deckRepository.delete(deckRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "deck")));
+    void deleteDeck(HttpServletRequest request, @PathVariable Long id) {
+
+        User user = deckService.getUserFromRequestCookies(request);
+
+        Deck deck = deckRepository.findByIdAndUser(id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
+
+        deckRepository.delete(deck);
     }
 
 }

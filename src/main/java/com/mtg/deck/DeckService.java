@@ -1,10 +1,15 @@
 package com.mtg.deck;
 
+import com.mtg.admin.user.User;
+import com.mtg.admin.user.UserRepository;
+import com.mtg.auth.JwtUtils;
 import com.mtg.card.base.Card;
 import com.mtg.card.base.CardRepository;
 import com.mtg.error.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +24,10 @@ public class DeckService {
     private DeckRepository deckRepository;
     @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    JwtUtils jwtUtils;
+    @Autowired
+    UserRepository userRepository;
 
     @Transactional
     public void removeCardReferences(Card card) {
@@ -45,11 +54,10 @@ public class DeckService {
         }
     }
 
-    public Deck addOrRemoveCard(Long deck_id, Long card_id, Map<String, String> fields) {
+    public Deck addOrRemoveCard(Deck deck, Long card_id, Map<String, String> fields) {
         if (!fields.containsKey("action") || (!fields.get("action").equals("add") && !fields.get("action").equals("remove"))) {
             throw new IllegalArgumentException("request body must contain 'action' field with value equal to either 'add' or 'remove'");
         }
-        Deck deck = deckRepository.findById(deck_id).orElseThrow(() -> new EntityNotFoundException(deck_id, "deck"));
         Card card = cardRepository.findById(card_id).orElseThrow(() -> new EntityNotFoundException(card_id, "card"));
         if (fields.get("action").equals("add")) {
             deck.addCard(card);
@@ -57,6 +65,12 @@ public class DeckService {
             deck.removeCard(card);
         }
         return deckRepository.save(deck);
+    }
+
+    public User getUserFromRequestCookies(HttpServletRequest request) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        String username = jwtUtils.getUserNameFromJwtToken(jwt);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     }
 
 }
