@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Secrets ###
+*.tfvars
+*.tfstate
+*.tfstate.backup
+*.pub
+src/main/resources/application.properties
+src/main/terraform/mtg_deck_builder_ec2
+src/main/terraform/.terraform.lock.hcl
+src/main/terraform/.terraform
+*.DS_Store
