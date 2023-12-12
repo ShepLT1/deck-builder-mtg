@@ -179,4 +179,9 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @GetMapping("/health")
+    ResponseEntity<?> check(HttpServletRequest request) {
+        return ResponseEntity.ok(new MessageResponse("Instance is healthy!"));
+    }
 }
