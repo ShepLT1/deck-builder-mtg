@@ -15,7 +15,7 @@ import java.util.*;
 public class Spell extends Card {
 
     public enum CardType {
-        INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE;
+        INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE, PLANESWALKER;
 
         @JsonCreator
         public static CardType fromText(String text) {
