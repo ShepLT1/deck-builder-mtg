@@ -196,7 +196,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 }
 
 resource "aws_ecs_capacity_provider" "ecs_capacity_provider" {
- name = "mtg-deck-builder-ecs-capacity-provider"
+ name = "mtgdeckbuilder-ecs-capacity-provider"
 
  auto_scaling_group_provider {
    auto_scaling_group_arn = aws_autoscaling_group.ecs_asg.arn
