@@ -42,5 +42,6 @@ src/main/resources/application-dev.properties
 src/main/resources/localhost.p12
 src/main/terraform/mtg_deck_builder_ec2
 src/main/terraform/.terraform.lock.hcl
+src/main/terraform/.terraform.tfstate.lock.info
 src/main/terraform/.terraform
 *.DS_Store
