@@ -8,7 +8,9 @@ import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("Spell")
@@ -42,7 +44,8 @@ public class Spell extends Card {
     @JsonCreator
     public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<Color> manaCost, @JsonProperty(value = "type", required = true) CardType type) {
         super(name, abilities);
-        Collections.sort(manaCost);
+//        manaCost.sort(new SortByType());
+//        manaCost.sort(new SortByColor());
         this.manaCost = manaCost;
         this.type = type;
     }
@@ -51,12 +54,22 @@ public class Spell extends Card {
     public String getStringManaCost() {
 
         StringBuilder output = new StringBuilder();
-        for (Color color : new HashSet<>(this.manaCost)) {
-            if (!output.toString().equals("")) {
-                output.append(", ");
-            }
-            output.append(Collections.frequency(this.manaCost, color)).append(" ").append(color.toString());
-        }
+//        for (Mana mana : new HashSet<>(this.manaCost)) {
+//            if (!output.toString().equals("")) {
+//                output.append(", ");
+//            }
+//            if (mana instanceof Generic) {
+//                output.append(" ").append(((Generic) mana).getValue());
+//            }
+//            output.append(mana.getColor()).append(" ").append(mana.getType());
+//            if (mana instanceof Hybrid) {
+//                output.append(" / ");
+//                if (((Hybrid) mana).getSecondMana() instanceof Generic secondMana) {
+//                    output.append(secondMana.getValue()).append(" ");
+//                }
+//                output.append(((Hybrid) mana).getSecondMana().getColor()).append(" ").append(((Hybrid) mana).getSecondMana().getType());
+//            }
+//        }
         return output.toString();
     }
 
@@ -88,7 +101,19 @@ public class Spell extends Card {
     @JsonIgnore
     @Override
     public List<Color> getColors() {
-        return new ArrayList<>(new LinkedHashSet<>(this.manaCost));
+        List<Color> colors = new ArrayList<>();
+//        for (Mana mana : new HashSet<>(this.manaCost)) {
+//            if (mana.getType().equals(ManaType.COLORED) || mana.getType().equals(ManaType.PHYREXIAN)) {
+//                colors.add(mana.getColor());
+//            }
+//            if (mana instanceof Hybrid) {
+//                Mana secondMana = ((Hybrid) mana).getSecondMana();
+//                if (secondMana.getType().equals(ManaType.COLORED) || secondMana.getType().equals(ManaType.PHYREXIAN)) {
+//                    colors.add(secondMana.getColor());
+//                }
+//            }
+//        }
+        return colors;
     }
 
     @Override

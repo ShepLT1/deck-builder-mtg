@@ -100,11 +100,7 @@ public class Deck {
     @JsonIgnore
     private boolean hasValidColors(Card card) {
         for (Color color : card.getColors()) {
-            if (color.equals(Color.ANY) || color.equals(Color.X)) {
-                continue;
-            }
-            String baseColor = color.toString().substring(3);
-            if (!getColors().contains(color) && !getColors().contains(Color.valueOf(baseColor))) {
+            if (!getColors().contains(color)) {
                 return false;
             }
         }

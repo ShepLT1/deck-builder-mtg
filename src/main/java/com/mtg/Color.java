@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 
 public enum Color {
-    ANY, COLORLESS, WHITE, BLUE, BLACK, RED, GREEN, X, PHIWHITE, PHIBLUE, PHIBLACK, PHIRED, PHIGREEN ;
+    COLORLESS, WHITE, BLUE, BLACK, RED, GREEN;
 
     @JsonCreator
     public static Color fromText(String text) {
