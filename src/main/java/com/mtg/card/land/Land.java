@@ -2,7 +2,7 @@ package com.mtg.card.land;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mtg.Color;
+import com.mtg.mana.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

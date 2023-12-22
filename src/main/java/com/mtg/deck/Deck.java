@@ -3,7 +3,7 @@ package com.mtg.deck;
 import com.mtg.admin.user.User;
 
 import com.fasterxml.jackson.annotation.*;
-import com.mtg.Color;
+import com.mtg.mana.Color;
 import com.mtg.card.base.Card;
 import jakarta.persistence.*;
 

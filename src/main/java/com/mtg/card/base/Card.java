@@ -1,7 +1,7 @@
 package com.mtg.card.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mtg.Color;
+import com.mtg.mana.Color;
 import com.mtg.deck.Deck;
 import jakarta.persistence.*;
 
@@ -32,16 +32,16 @@ public abstract class Card {
         this.deckList = new ArrayList<>();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public List<Deck> getDeckList() {
         return deckList;
     }
 
     public void setDeckList(List<Deck> deckList) {
         this.deckList = deckList;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

@@ -1,6 +1,6 @@
 package com.mtg.deck;
 
-import com.mtg.Color;
+import com.mtg.mana.Color;
 
 import java.util.List;
 

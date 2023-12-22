@@ -2,8 +2,8 @@ package com.mtg.card.spell.planeswalker;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mtg.Color;
 import com.mtg.card.spell.Spell;
+import com.mtg.mana.ManaSymbol;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class Planeswalker extends Spell {
     public Planeswalker() {}
 
     @JsonCreator
-    public Planeswalker(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true)  List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<Color> manaCost, @JsonProperty(value = "loyalty", required = true) int loyalty) {
+    public Planeswalker(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true)  List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "loyalty", required = true) int loyalty) {
         super(name, abilities, manaCost, CardType.PLANESWALKER);
         this.loyalty = loyalty;
     }

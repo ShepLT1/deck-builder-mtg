@@ -3,17 +3,15 @@ package com.mtg.card.spell;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mtg.Color;
 import com.mtg.card.base.Card;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import com.mtg.mana.*;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Entity
-@DiscriminatorValue("Spell")
+@Entity(name = "spells")
 public class Spell extends Card {
 
     public enum CardType {
@@ -36,16 +34,22 @@ public class Spell extends Card {
 
     }
 
-    private List<Color> manaCost;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "spell_mana_symbol",
+            joinColumns = @JoinColumn(name = "spell_id"),
+            inverseJoinColumns = @JoinColumn(name = "mana_symbol_id"))
+    private List<ManaSymbol> manaCost;
     private CardType type;
 
-    public Spell() {}
+    public Spell() {
+    }
 
     @JsonCreator
-    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<Color> manaCost, @JsonProperty(value = "type", required = true) CardType type) {
+    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "type", required = true) CardType type) {
         super(name, abilities);
-//        manaCost.sort(new SortByType());
-//        manaCost.sort(new SortByColor());
+        manaCost.sort(new SortByType());
+        manaCost.sort(new SortByColor());
         this.manaCost = manaCost;
         this.type = type;
     }
@@ -54,30 +58,30 @@ public class Spell extends Card {
     public String getStringManaCost() {
 
         StringBuilder output = new StringBuilder();
-//        for (Mana mana : new HashSet<>(this.manaCost)) {
-//            if (!output.toString().equals("")) {
-//                output.append(", ");
-//            }
-//            if (mana instanceof Generic) {
-//                output.append(" ").append(((Generic) mana).getValue());
-//            }
-//            output.append(mana.getColor()).append(" ").append(mana.getType());
-//            if (mana instanceof Hybrid) {
-//                output.append(" / ");
-//                if (((Hybrid) mana).getSecondMana() instanceof Generic secondMana) {
-//                    output.append(secondMana.getValue()).append(" ");
-//                }
-//                output.append(((Hybrid) mana).getSecondMana().getColor()).append(" ").append(((Hybrid) mana).getSecondMana().getType());
-//            }
-//        }
+        for (ManaSymbol manaSymbol : this.manaCost) {
+            if (!output.toString().equals("")) {
+                output.append(", ");
+            }
+            int i = 0;
+            for (Mana mana : manaSymbol.getManaList()) {
+                if (i > 0) {
+                    output.append(" / ");
+                }
+                if (mana.getType().equals(ManaType.GENERIC)) {
+                    output.append(" ").append(mana.getValue());
+                }
+                output.append(mana.getColor()).append(" ").append(mana.getType());
+                i++;
+            }
+        }
         return output.toString();
     }
 
-    public List<Color> getManaCost() {
+    public List<ManaSymbol> getManaCost() {
         return this.manaCost;
     }
 
-    public void setManaCost(List<Color> manaCost) {
+    public void setManaCost(List<ManaSymbol> manaCost) {
         this.manaCost = manaCost;
     }
 
@@ -102,17 +106,13 @@ public class Spell extends Card {
     @Override
     public List<Color> getColors() {
         List<Color> colors = new ArrayList<>();
-//        for (Mana mana : new HashSet<>(this.manaCost)) {
-//            if (mana.getType().equals(ManaType.COLORED) || mana.getType().equals(ManaType.PHYREXIAN)) {
-//                colors.add(mana.getColor());
-//            }
-//            if (mana instanceof Hybrid) {
-//                Mana secondMana = ((Hybrid) mana).getSecondMana();
-//                if (secondMana.getType().equals(ManaType.COLORED) || secondMana.getType().equals(ManaType.PHYREXIAN)) {
-//                    colors.add(secondMana.getColor());
-//                }
-//            }
-//        }
+        for (ManaSymbol manaSymbol : this.manaCost) {
+            for (Mana mana : manaSymbol.getManaList()) {
+                if (mana.getType().equals(ManaType.COLORED) || mana.getType().equals(ManaType.PHYREXIAN)) {
+                    colors.add(mana.getColor());
+                }
+            }
+        }
         return colors;
     }
 

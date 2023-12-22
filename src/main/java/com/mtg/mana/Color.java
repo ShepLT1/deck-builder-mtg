@@ -1,4 +1,4 @@
-package com.mtg;
+package com.mtg.mana;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

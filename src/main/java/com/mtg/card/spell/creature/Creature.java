@@ -2,8 +2,8 @@ package com.mtg.card.spell.creature;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mtg.Color;
 import com.mtg.card.spell.Spell;
+import com.mtg.mana.ManaSymbol;
 import jakarta.persistence.Entity;
 
 import java.util.ArrayList;
@@ -37,12 +37,12 @@ public class Creature extends Spell {
 
     public Creature() {}
 
-    public Creature(String name, List<Color> manaCost, int power, int toughness, List<Attribute> attributes) {
+    public Creature(String name, List<ManaSymbol> manaCost, int power, int toughness, List<Attribute> attributes) {
         this(name, new ArrayList<>(), manaCost, power, toughness, attributes);
     }
 
     @JsonCreator
-    public Creature(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<Color> manaCost, @JsonProperty(value = "power", required = true) int power, @JsonProperty(value = "toughness", required = true) int toughness, List<Attribute> attributes) {
+    public Creature(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "power", required = true) int power, @JsonProperty(value = "toughness", required = true) int toughness, List<Attribute> attributes) {
         super(name, abilities, manaCost, CardType.CREATURE);
         this.power = power;
         this.toughness = toughness;
