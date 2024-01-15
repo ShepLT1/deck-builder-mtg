@@ -74,6 +74,8 @@ public class Spell extends Card {
             this.type = CardType.CREATURE;
         } else if (getClass().getSimpleName().equalsIgnoreCase("planeswalker")) {
             this.type = CardType.PLANESWALKER;
+        } else if (getClass().getSimpleName().equalsIgnoreCase("battle")) {
+            this.type = CardType.BATTLE;
         } else {
             this.type = type;
         }

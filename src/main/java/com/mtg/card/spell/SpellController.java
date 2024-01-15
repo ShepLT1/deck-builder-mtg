@@ -36,6 +36,9 @@ class SpellController {
         if (newRawSpell.getType().equals(CardType.PLANESWALKER)) {
             throw new InvalidCardTypeException(CardType.PLANESWALKER, newRawSpell.getClass().getSimpleName());
         }
+        if (newRawSpell.getType().equals(CardType.BATTLE)) {
+            throw new InvalidCardTypeException(CardType.BATTLE, newRawSpell.getClass().getSimpleName());
+        }
         Spell newSpell = new Spell();
         newSpell.setName(newRawSpell.getName());
         newSpell.setAbilities(newRawSpell.getAbilities());
@@ -53,6 +56,9 @@ class SpellController {
         }
         if (newRawSpell.getType().equals(CardType.PLANESWALKER)) {
             throw new InvalidCardTypeException(CardType.PLANESWALKER, newRawSpell.getClass().getSimpleName());
+        }
+        if (newRawSpell.getType().equals(CardType.BATTLE)) {
+            throw new InvalidCardTypeException(CardType.BATTLE, newRawSpell.getClass().getSimpleName());
         }
         return repository.findById(id)
                 .map(spell -> {

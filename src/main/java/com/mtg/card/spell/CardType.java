@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 
 public enum CardType {
-    INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE, PLANESWALKER;
+    INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE, PLANESWALKER, BATTLE;
 
     @JsonCreator
     public static CardType fromText(String text) {
