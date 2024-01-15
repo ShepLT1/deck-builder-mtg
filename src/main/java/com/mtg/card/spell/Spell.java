@@ -8,31 +8,10 @@ import com.mtg.mana.*;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity(name = "spells")
 public class Spell extends Card {
-
-    public enum CardType {
-        INSTANT, SORCERY, ARTIFACT, ENCHANTMENT, CREATURE, PLANESWALKER;
-
-        @JsonCreator
-        public static CardType fromText(String text) {
-            for (CardType c : CardType.values()) {
-                if (c.name().equals(text.toUpperCase())) {
-                    return c;
-                }
-            }
-            throw new IllegalArgumentException("Unaccepted CardType value. Excepted CardType values (case insensitive) = " + Arrays.toString(CardType.values()));
-        }
-
-        @Override
-        public String toString() {
-            return name();
-        }
-
-    }
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -92,10 +71,14 @@ public class Spell extends Card {
     public void setType(CardType type) {
         if (getClass().getSimpleName().equalsIgnoreCase("creature")) {
             this.type = CardType.CREATURE;
+        } else if (getClass().getSimpleName().equalsIgnoreCase("planeswalker")) {
+            this.type = CardType.PLANESWALKER;
         } else {
             this.type = type;
         }
     }
+
+    // TODO: refactor getManaValue to account for generic mana
 
     @JsonIgnore
     public int getManaValue() {
