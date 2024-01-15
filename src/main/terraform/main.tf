@@ -34,13 +34,13 @@ resource "aws_internet_gateway" "mtg_deck_builder_igw" {
   }
 }
 
-resource "aws_eip" "mtg_deck_builder_web_eip" {
-  count = var.subnet_count.public
-  depends_on = [aws_internet_gateway.mtg_deck_builder_igw]
-  tags = {
-    Name = "mtg_deck_builder_web_eip"
-  }
-}
+#resource "aws_eip" "mtg_deck_builder_web_eip" {
+#  count = var.subnet_count.public
+#  depends_on = [aws_internet_gateway.mtg_deck_builder_igw]
+#  tags = {
+#    Name = "mtg_deck_builder_web_eip"
+#  }
+#}
 
 resource "aws_subnet" "mtg_deck_builder_public_subnet" {
   count = var.subnet_count.public
