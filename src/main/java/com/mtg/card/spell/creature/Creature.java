@@ -2,6 +2,7 @@ package com.mtg.card.spell.creature;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mtg.card.spell.CardType;
 import com.mtg.card.spell.Spell;
 import com.mtg.mana.ManaSymbol;
 import jakarta.persistence.Entity;
@@ -35,7 +36,9 @@ public class Creature extends Spell {
     private int toughness;
     private List<Attribute> attributes;
 
-    public Creature() {}
+    public Creature() {
+
+    }
 
     public Creature(String name, List<ManaSymbol> manaCost, int power, int toughness, List<Attribute> attributes) {
         this(name, new ArrayList<>(), manaCost, power, toughness, attributes);

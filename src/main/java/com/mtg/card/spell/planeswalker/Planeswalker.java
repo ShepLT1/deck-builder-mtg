@@ -2,6 +2,7 @@ package com.mtg.card.spell.planeswalker;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mtg.card.spell.CardType;
 import com.mtg.card.spell.Spell;
 import com.mtg.mana.ManaSymbol;
 import jakarta.persistence.Entity;
