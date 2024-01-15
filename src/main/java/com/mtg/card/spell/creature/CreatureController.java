@@ -38,6 +38,7 @@ class CreatureController {
         newCreature.setPower(newRawCreature.getPower());
         newCreature.setToughness(newRawCreature.getToughness());
         newCreature.setAttributes(newRawCreature.getAttributes());
+        newCreature.setDual(newRawCreature.getDual());
         return repository.save(newCreature);
     }
 
@@ -52,6 +53,7 @@ class CreatureController {
                     creature.setPower(newRawCreature.getPower());
                     creature.setToughness(newRawCreature.getToughness());
                     creature.setAttributes(newRawCreature.getAttributes());
+                    creature.setDual(newRawCreature.getDual());
                     return repository.save(creature);
                 })
                 .orElseGet(() -> {
@@ -63,6 +65,7 @@ class CreatureController {
                     creature.setPower(newRawCreature.getPower());
                     creature.setToughness(newRawCreature.getToughness());
                     creature.setAttributes(newRawCreature.getAttributes());
+                    creature.setDual(newRawCreature.getDual());
                     return repository.save(creature);
                 });
     }

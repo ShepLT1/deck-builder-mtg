@@ -36,6 +36,7 @@ class LandController {
                     land.setName(newLand.getName());
                     land.setAbilities(newLand.getAbilities());
                     land.setColors(newLand.getColors());
+                    land.setDual(newLand.getDual());
                     return repository.save(land);
                 })
                 .orElseGet(() -> {

@@ -20,16 +20,18 @@ public abstract class Card {
     @ManyToMany(mappedBy = "cardList")
     @JsonIgnore
     private List<Deck> deckList;
+    private Card dual;
 
 
     public Card() {
 
     }
 
-    public Card(String name, List<String> abilities) {
+    public Card(String name, List<String> abilities, Card dual) {
         this.name = name;
         this.abilities = abilities;
         this.deckList = new ArrayList<>();
+        this.dual = dual;
     }
 
     public Long getId() {
@@ -58,6 +60,14 @@ public abstract class Card {
 
     public void setAbilities(List<String> abilities) {
         this.abilities = abilities;
+    }
+
+    public Card getDual() {
+        return dual;
+    }
+
+    public void setDual(Card dual) {
+        this.dual = dual;
     }
 
     public abstract List<Color> getColors();

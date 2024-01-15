@@ -36,6 +36,7 @@ public class PlaneswalkerController {
         planeswalker.setType(CardType.PLANESWALKER);
         spellService.updateManaCost(planeswalker, newRawPlaneswalker.getManaCost());
         planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
+        planeswalker.setDual(newRawPlaneswalker.getDual());
         return repository.save(planeswalker);
     }
 
@@ -48,6 +49,7 @@ public class PlaneswalkerController {
                     planeswalker.setType(CardType.PLANESWALKER);
                     spellService.updateManaCost(planeswalker, newRawPlaneswalker.getManaCost());
                     planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
+                    planeswalker.setDual(newRawPlaneswalker.getDual());
                     return repository.save(planeswalker);
                 })
                 .orElseGet(() -> {
@@ -57,6 +59,7 @@ public class PlaneswalkerController {
                     newPlaneswalker.setType(CardType.PLANESWALKER);
                     spellService.updateManaCost(newPlaneswalker, newRawPlaneswalker.getManaCost());
                     newPlaneswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
+                    newPlaneswalker.setDual(newRawPlaneswalker.getDual());
                     return repository.save(newPlaneswalker);
                 });
     }

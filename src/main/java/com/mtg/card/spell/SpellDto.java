@@ -1,14 +1,16 @@
 package com.mtg.card.spell;
 
+import com.mtg.card.base.Card;
+
 import java.util.List;
 
 public class SpellDto {
 
     private String name;
     private List<String> abilities;
-
     private List<Integer> manaCost;
     private CardType type;
+    private Card dual;
 
     public SpellDto() {
     }
@@ -49,5 +51,13 @@ public class SpellDto {
         } else {
             this.type = type;
         }
+    }
+
+    public Card getDual() {
+        return dual;
+    }
+
+    public void setDual(Card dual) {
+        this.dual = dual;
     }
 }

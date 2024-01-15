@@ -40,6 +40,7 @@ class SpellController {
         newSpell.setName(newRawSpell.getName());
         newSpell.setAbilities(newRawSpell.getAbilities());
         newSpell.setType(newRawSpell.getType());
+        newSpell.setDual(newRawSpell.getDual());
         spellService.updateManaCost(newSpell, newRawSpell.getManaCost());
         return repository.save(newSpell);
     }
@@ -56,8 +57,9 @@ class SpellController {
                 .map(spell -> {
                     spell.setName(newRawSpell.getName());
                     spell.setAbilities(newRawSpell.getAbilities());
-                    spellService.updateManaCost(spell, newRawSpell.getManaCost());
                     spell.setType(newRawSpell.getType());
+                    spell.setDual(newRawSpell.getDual());
+                    spellService.updateManaCost(spell, newRawSpell.getManaCost());
                     return repository.save(spell);
                 })
                 .orElseGet(() -> {
@@ -65,6 +67,7 @@ class SpellController {
                     newSpell.setName(newRawSpell.getName());
                     newSpell.setAbilities(newRawSpell.getAbilities());
                     newSpell.setType(newRawSpell.getType());
+                    newSpell.setDual(newRawSpell.getDual());
                     spellService.updateManaCost(newSpell, newRawSpell.getManaCost());
                     return repository.save(newSpell);
                 });
