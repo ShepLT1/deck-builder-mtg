@@ -41,6 +41,7 @@ class SpellController {
         newSpell.setAbilities(newRawSpell.getAbilities());
         newSpell.setType(newRawSpell.getType());
         newSpell.setDual(newRawSpell.getDual());
+        newSpell.setRarity(newRawSpell.getRarity());
         spellService.updateManaCost(newSpell, newRawSpell.getManaCost());
         return repository.save(newSpell);
     }
@@ -59,6 +60,7 @@ class SpellController {
                     spell.setAbilities(newRawSpell.getAbilities());
                     spell.setType(newRawSpell.getType());
                     spell.setDual(newRawSpell.getDual());
+                    spell.setRarity(newRawSpell.getRarity());
                     spellService.updateManaCost(spell, newRawSpell.getManaCost());
                     return repository.save(spell);
                 })
@@ -68,6 +70,7 @@ class SpellController {
                     newSpell.setAbilities(newRawSpell.getAbilities());
                     newSpell.setType(newRawSpell.getType());
                     newSpell.setDual(newRawSpell.getDual());
+                    newSpell.setRarity(newRawSpell.getRarity());
                     spellService.updateManaCost(newSpell, newRawSpell.getManaCost());
                     return repository.save(newSpell);
                 });

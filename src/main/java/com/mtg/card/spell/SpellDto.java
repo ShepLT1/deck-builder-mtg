@@ -1,6 +1,7 @@
 package com.mtg.card.spell;
 
 import com.mtg.card.base.Card;
+import com.mtg.card.base.Rarity;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class SpellDto {
     private List<Integer> manaCost;
     private CardType type;
     private Card dual;
+    private Rarity rarity;
 
     public SpellDto() {
     }
@@ -59,5 +61,13 @@ public class SpellDto {
 
     public void setDual(Card dual) {
         this.dual = dual;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(Rarity rarity) {
+        this.rarity = rarity;
     }
 }

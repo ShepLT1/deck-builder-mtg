@@ -3,6 +3,7 @@ package com.mtg.card.spell.creature;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mtg.card.base.Card;
+import com.mtg.card.base.Rarity;
 import com.mtg.card.spell.CardType;
 import com.mtg.card.spell.Spell;
 import com.mtg.mana.ManaSymbol;
@@ -41,13 +42,13 @@ public class Creature extends Spell {
 
     }
 
-    public Creature(String name, List<ManaSymbol> manaCost, int power, int toughness, List<Attribute> attributes, Card dual) {
-        this(name, new ArrayList<>(), manaCost, power, toughness, attributes, dual);
+    public Creature(String name, List<ManaSymbol> manaCost, int power, int toughness, List<Attribute> attributes, Rarity rarity, Card dual) {
+        this(name, new ArrayList<>(), manaCost, power, toughness, attributes, rarity, dual);
     }
 
     @JsonCreator
-    public Creature(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "power", required = true) int power, @JsonProperty(value = "toughness", required = true) int toughness, List<Attribute> attributes, @JsonProperty(value = "dual", required = true) Card dual) {
-        super(name, abilities, manaCost, CardType.CREATURE, dual);
+    public Creature(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "power", required = true) int power, @JsonProperty(value = "toughness", required = true) int toughness, List<Attribute> attributes, @JsonProperty(value = "rarity", required = true) Rarity rarity, Card dual) {
+        super(name, abilities, manaCost, CardType.CREATURE, rarity, dual);
         this.power = power;
         this.toughness = toughness;
         this.attributes = attributes;

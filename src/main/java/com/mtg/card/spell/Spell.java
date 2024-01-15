@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mtg.card.base.Card;
+import com.mtg.card.base.Rarity;
 import com.mtg.mana.*;
 import jakarta.persistence.*;
 
@@ -25,8 +26,8 @@ public class Spell extends Card {
     }
 
     @JsonCreator
-    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "type", required = true) CardType type, @JsonProperty(value = "dual", required = true) Card dual) {
-        super(name, abilities, dual);
+    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "type", required = true) CardType type, @JsonProperty(value = "rarity", required = true) Rarity rarity, Card dual) {
+        super(name, abilities, rarity, dual);
         manaCost.sort(new SortByType());
         manaCost.sort(new SortByColor());
         this.manaCost = manaCost;

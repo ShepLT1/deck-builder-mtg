@@ -21,16 +21,17 @@ public abstract class Card {
     @JsonIgnore
     private List<Deck> deckList;
     private Card dual;
-
+    private Rarity rarity;
 
     public Card() {
 
     }
 
-    public Card(String name, List<String> abilities, Card dual) {
+    public Card(String name, List<String> abilities, Rarity rarity, Card dual) {
         this.name = name;
         this.abilities = abilities;
         this.deckList = new ArrayList<>();
+        this.rarity = rarity;
         this.dual = dual;
     }
 
@@ -68,6 +69,14 @@ public abstract class Card {
 
     public void setDual(Card dual) {
         this.dual = dual;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(Rarity rarity) {
+        this.rarity = rarity;
     }
 
     public abstract List<Color> getColors();

@@ -37,6 +37,7 @@ public class PlaneswalkerController {
         spellService.updateManaCost(planeswalker, newRawPlaneswalker.getManaCost());
         planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
         planeswalker.setDual(newRawPlaneswalker.getDual());
+        planeswalker.setRarity(newRawPlaneswalker.getRarity());
         return repository.save(planeswalker);
     }
 
@@ -50,6 +51,7 @@ public class PlaneswalkerController {
                     spellService.updateManaCost(planeswalker, newRawPlaneswalker.getManaCost());
                     planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
                     planeswalker.setDual(newRawPlaneswalker.getDual());
+                    planeswalker.setRarity(newRawPlaneswalker.getRarity());
                     return repository.save(planeswalker);
                 })
                 .orElseGet(() -> {
@@ -60,6 +62,7 @@ public class PlaneswalkerController {
                     spellService.updateManaCost(newPlaneswalker, newRawPlaneswalker.getManaCost());
                     newPlaneswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
                     newPlaneswalker.setDual(newRawPlaneswalker.getDual());
+                    newPlaneswalker.setRarity(newRawPlaneswalker.getRarity());
                     return repository.save(newPlaneswalker);
                 });
     }
