@@ -2,13 +2,10 @@ package com.mtg.card.spell.creature;
 
 import com.mtg.card.spell.SpellDto;
 
-import java.util.List;
-
 public class CreatureDto extends SpellDto {
 
     private int power;
     private int toughness;
-    private List<Creature.Attribute> attributes;
 
     public CreatureDto() {
     }
@@ -29,11 +26,4 @@ public class CreatureDto extends SpellDto {
         this.toughness = toughness;
     }
 
-    public List<Creature.Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<Creature.Attribute> attributes) {
-        this.attributes = attributes;
-    }
 }

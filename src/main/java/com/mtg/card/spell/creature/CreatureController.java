@@ -37,7 +37,6 @@ class CreatureController {
         spellService.updateManaCost(newCreature, newRawCreature.getManaCost());
         newCreature.setPower(newRawCreature.getPower());
         newCreature.setToughness(newRawCreature.getToughness());
-        newCreature.setAttributes(newRawCreature.getAttributes());
         newCreature.setDual(newRawCreature.getDual());
         newCreature.setRarity(newRawCreature.getRarity());
         return repository.save(newCreature);
@@ -53,7 +52,6 @@ class CreatureController {
                     spellService.updateManaCost(creature, newRawCreature.getManaCost());
                     creature.setPower(newRawCreature.getPower());
                     creature.setToughness(newRawCreature.getToughness());
-                    creature.setAttributes(newRawCreature.getAttributes());
                     creature.setDual(newRawCreature.getDual());
                     creature.setRarity(newRawCreature.getRarity());
                     return repository.save(creature);
@@ -66,7 +64,6 @@ class CreatureController {
                     spellService.updateManaCost(creature, newRawCreature.getManaCost());
                     creature.setPower(newRawCreature.getPower());
                     creature.setToughness(newRawCreature.getToughness());
-                    creature.setAttributes(newRawCreature.getAttributes());
                     creature.setDual(newRawCreature.getDual());
                     creature.setRarity(newRawCreature.getRarity());
                     return repository.save(creature);
