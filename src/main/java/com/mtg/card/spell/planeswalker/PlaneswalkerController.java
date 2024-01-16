@@ -38,6 +38,7 @@ public class PlaneswalkerController {
         planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
         planeswalker.setDual(newRawPlaneswalker.getDual());
         planeswalker.setRarity(newRawPlaneswalker.getRarity());
+        planeswalker.setImageUri(newRawPlaneswalker.getImageUri());
         return repository.save(planeswalker);
     }
 
@@ -52,6 +53,7 @@ public class PlaneswalkerController {
                     planeswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
                     planeswalker.setDual(newRawPlaneswalker.getDual());
                     planeswalker.setRarity(newRawPlaneswalker.getRarity());
+                    planeswalker.setImageUri(newRawPlaneswalker.getImageUri());
                     return repository.save(planeswalker);
                 })
                 .orElseGet(() -> {
@@ -63,6 +65,7 @@ public class PlaneswalkerController {
                     newPlaneswalker.setLoyalty(newRawPlaneswalker.getLoyalty());
                     newPlaneswalker.setDual(newRawPlaneswalker.getDual());
                     newPlaneswalker.setRarity(newRawPlaneswalker.getRarity());
+                    newPlaneswalker.setImageUri(newRawPlaneswalker.getImageUri());
                     return repository.save(newPlaneswalker);
                 });
     }

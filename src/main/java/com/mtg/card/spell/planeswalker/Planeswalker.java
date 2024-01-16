@@ -23,8 +23,8 @@ public class Planeswalker extends Spell {
     public Planeswalker() {}
 
     @JsonCreator
-    public Planeswalker(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true)  List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "loyalty", required = true) int loyalty, @JsonProperty(value = "rarity", required = true) Rarity rarity, Card dual) {
-        super(name, abilities, manaCost, CardType.PLANESWALKER, rarity, dual);
+    public Planeswalker(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true)  List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "loyalty", required = true) int loyalty, @JsonProperty(value = "rarity", required = true) Rarity rarity, @JsonProperty(value = "imageUri", required = true) String imageUri, Card dual) {
+        super(name, abilities, manaCost, CardType.PLANESWALKER, rarity, imageUri, dual);
         this.loyalty = loyalty;
     }
 

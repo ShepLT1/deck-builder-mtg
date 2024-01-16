@@ -13,6 +13,7 @@ public class SpellDto {
     private CardType type;
     private Card dual;
     private Rarity rarity;
+    private String imageUri;
 
     public SpellDto() {
     }
@@ -69,5 +70,13 @@ public class SpellDto {
 
     public void setRarity(Rarity rarity) {
         this.rarity = rarity;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 }

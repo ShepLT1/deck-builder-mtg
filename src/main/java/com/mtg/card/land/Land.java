@@ -20,12 +20,12 @@ public class Land extends Card {
     public Land() {}
 
     public Land(String name, List<Color> colors, Rarity rarity) {
-        this(name, new ArrayList<>(), colors, rarity, null);
+        this(name, new ArrayList<>(), colors, rarity, null, null);
     }
 
     @JsonCreator
-    public Land(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "colors", required = true) List<Color> colors, @JsonProperty(value = "rarity", required = true) Rarity rarity, Card dual) {
-        super(name, abilities, rarity, dual);
+    public Land(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "colors", required = true) List<Color> colors, @JsonProperty(value = "rarity", required = true) Rarity rarity, String imageUri, Card dual) {
+        super(name, abilities, rarity, imageUri, dual);
         this.colors = colors;
     }
 

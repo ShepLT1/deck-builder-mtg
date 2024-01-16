@@ -22,16 +22,18 @@ public abstract class Card {
     private List<Deck> deckList;
     private Card dual;
     private Rarity rarity;
+    private String imageUri;
 
     public Card() {
 
     }
 
-    public Card(String name, List<String> abilities, Rarity rarity, Card dual) {
+    public Card(String name, List<String> abilities, Rarity rarity, String imageUri, Card dual) {
         this.name = name;
         this.abilities = abilities;
         this.deckList = new ArrayList<>();
         this.rarity = rarity;
+        this.imageUri = imageUri;
         this.dual = dual;
     }
 
@@ -77,6 +79,14 @@ public abstract class Card {
 
     public void setRarity(Rarity rarity) {
         this.rarity = rarity;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public abstract List<Color> getColors();

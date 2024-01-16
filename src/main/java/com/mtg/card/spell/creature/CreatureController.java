@@ -39,6 +39,7 @@ class CreatureController {
         newCreature.setToughness(newRawCreature.getToughness());
         newCreature.setDual(newRawCreature.getDual());
         newCreature.setRarity(newRawCreature.getRarity());
+        newCreature.setImageUri(newRawCreature.getImageUri());
         return repository.save(newCreature);
     }
 
@@ -54,6 +55,7 @@ class CreatureController {
                     creature.setToughness(newRawCreature.getToughness());
                     creature.setDual(newRawCreature.getDual());
                     creature.setRarity(newRawCreature.getRarity());
+                    creature.setImageUri(newRawCreature.getImageUri());
                     return repository.save(creature);
                 })
                 .orElseGet(() -> {
@@ -66,6 +68,7 @@ class CreatureController {
                     creature.setToughness(newRawCreature.getToughness());
                     creature.setDual(newRawCreature.getDual());
                     creature.setRarity(newRawCreature.getRarity());
+                    creature.setImageUri(newRawCreature.getImageUri());
                     return repository.save(creature);
                 });
     }
