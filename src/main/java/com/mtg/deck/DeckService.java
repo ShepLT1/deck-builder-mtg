@@ -1,15 +1,10 @@
 package com.mtg.deck;
 
-import com.mtg.admin.user.User;
-import com.mtg.admin.user.UserRepository;
-import com.mtg.auth.JwtUtils;
 import com.mtg.card.base.Card;
 import com.mtg.card.base.CardRepository;
 import com.mtg.error.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,10 +19,6 @@ public class DeckService {
     private DeckRepository deckRepository;
     @Autowired
     private CardRepository cardRepository;
-    @Autowired
-    JwtUtils jwtUtils;
-    @Autowired
-    UserRepository userRepository;
 
     @Transactional
     public void removeCardReferences(Card card) {
@@ -65,12 +56,6 @@ public class DeckService {
             deck.removeCard(card);
         }
         return deckRepository.save(deck);
-    }
-
-    public User getUserFromRequestCookies(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromCookies(request);
-        String username = jwtUtils.getUserNameFromJwtToken(jwt);
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     }
 
 }

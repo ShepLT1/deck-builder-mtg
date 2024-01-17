@@ -1,6 +1,7 @@
 package com.mtg.deck;
 
 import com.mtg.admin.user.User;
+import com.mtg.admin.user.UserDetailsServiceImpl;
 import com.mtg.card.base.CardRepository;
 import com.mtg.error.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,13 +22,15 @@ class DeckController {
     CardRepository cardRepository;
     @Autowired
     DeckService deckService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("")
     Page<Deck> all(HttpServletRequest request, @RequestParam(required=false) String name, Pageable pageable) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         if (name != null) {
 
@@ -46,7 +49,7 @@ class DeckController {
     @PostMapping("")
     Deck newDeck(HttpServletRequest request, @RequestBody DeckDto preDeck) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         Deck newDeck = new Deck(preDeck.getName(), user, preDeck.getColors());
         if (preDeck.getCardList() != null) {
@@ -59,7 +62,7 @@ class DeckController {
     @GetMapping("/{id}")
     Deck one(HttpServletRequest request, @PathVariable Long id) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         return deckRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
@@ -68,7 +71,7 @@ class DeckController {
     @PatchMapping("/{id}")
     Deck updateDeck(HttpServletRequest request, @RequestBody DeckDto partialDeck, @PathVariable Long id) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         Deck deck = deckRepository.findByIdAndUser(id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
         deck.setName(partialDeck.getName());
@@ -80,7 +83,7 @@ class DeckController {
     @PatchMapping("/{deck_id}/cards/{card_id}")
     Deck addOrRemoveCard(HttpServletRequest request, @PathVariable Long deck_id, @PathVariable Long card_id, @RequestBody Map<String, String> fields) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         Deck deck = deckRepository.findByIdAndUser(deck_id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), deck_id, "deck"));
 
@@ -90,7 +93,7 @@ class DeckController {
     @DeleteMapping("/{id}")
     void deleteDeck(HttpServletRequest request, @PathVariable Long id) {
 
-        User user = deckService.getUserFromRequestCookies(request);
+        User user = userDetailsService.getUserFromRequestCookies(request);
 
         Deck deck = deckRepository.findByIdAndUser(id, user).orElseThrow(() -> new EntityNotFoundException(user.getUsername(), id, "deck"));
 
