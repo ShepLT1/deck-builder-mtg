@@ -29,21 +29,23 @@ public class Collectible {
     @OneToMany(mappedBy="collectible")
     @JsonIgnore
     private Set<Listing> listings;
+    private String imageUri;
 
     public Collectible() {
     }
 
-    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set) {
-        this(card, users, collectorNumber, set, new HashSet<Listing>());
+    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set, String imageUri) {
+        this(card, users, collectorNumber, set, new HashSet<Listing>(), imageUri);
     }
 
     @JsonCreator
-    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, Set<Listing> listings) {
+    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, Set<Listing> listings, @JsonProperty(value = "imageUri", required = true) String imageUri) {
         this.card = card;
         this.collectorNumber = collectorNumber;
         this.set = set;
         this.users = Objects.requireNonNullElseGet(users, ArrayList::new);
         this.listings = Objects.requireNonNullElseGet(listings, HashSet::new);
+        this.imageUri = imageUri;
     }
 
     public Long getId() {
@@ -88,6 +90,14 @@ public class Collectible {
 
     public void setListings(Set<Listing> listings) {
         this.listings = listings;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
 }
