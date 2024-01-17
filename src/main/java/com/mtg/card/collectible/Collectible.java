@@ -12,7 +12,28 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity(name="collectibles")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"collectorNumber", "finish"}))
 public class Collectible {
+
+    public enum Finish {
+        FOIL, NONFOIL;
+
+        @JsonCreator
+        public static Finish fromText(String text) {
+            for (Finish f : Finish.values()) {
+                if (f.name().equals(text.toUpperCase())) {
+                    return f;
+                }
+            }
+            throw new IllegalArgumentException("Unaccepted Finish value. Excepted Finish values (case insensitive) = " + Arrays.toString(Finish.values()));
+        }
+
+        @Override
+        public String toString() {
+            return name();
+        }
+
+    }
 
     private @Id @GeneratedValue Long id;
     @ManyToOne
@@ -21,11 +42,11 @@ public class Collectible {
     @ManyToMany(mappedBy="collection")
     @JsonIgnore
     private List<User> users;
-    @Column(unique = true, name = "IX_COLLECTOR_NUMBER")
     private String collectorNumber;
     @ManyToOne
     @JoinColumn(name = "set_id", nullable=false)
     private ReleaseSet set;
+    private Finish finish;
     @OneToMany(mappedBy="collectible")
     @JsonIgnore
     private Set<Listing> listings;
@@ -34,15 +55,16 @@ public class Collectible {
     public Collectible() {
     }
 
-    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set, String imageUri) {
-        this(card, users, collectorNumber, set, new HashSet<Listing>(), imageUri);
+    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set, Finish finish, String imageUri) {
+        this(card, users, collectorNumber, set, finish, new HashSet<>(), imageUri);
     }
 
     @JsonCreator
-    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, Set<Listing> listings, @JsonProperty(value = "imageUri", required = true) String imageUri) {
+    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, @JsonProperty(value = "finish", required = true) Finish finish,  Set<Listing> listings, @JsonProperty(value = "imageUri", required = true) String imageUri) {
         this.card = card;
         this.collectorNumber = collectorNumber;
         this.set = set;
+        this.finish = finish;
         this.users = Objects.requireNonNullElseGet(users, ArrayList::new);
         this.listings = Objects.requireNonNullElseGet(listings, HashSet::new);
         this.imageUri = imageUri;
@@ -82,6 +104,14 @@ public class Collectible {
 
     public void setSet(ReleaseSet set) {
         this.set = set;
+    }
+
+    public Finish getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Finish finish) {
+        this.finish = finish;
     }
 
     public Set<Listing> getListings() {

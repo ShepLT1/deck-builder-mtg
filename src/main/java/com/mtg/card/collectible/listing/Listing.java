@@ -18,16 +18,14 @@ public class Listing {
     @JoinColumn(name = "collectible_id", nullable=false)
     private Collectible collectible;
     private double usd;
-    private double usdFoil;
 
     public Listing() {
     }
 
     @JsonCreator
-    public Listing(@JsonProperty(value = "collectible", required = true) Collectible collectible, @JsonProperty(value = "usd", required = true) double usd, @JsonProperty(value = "usdFoil", required = true) double usdFoil) {
+    public Listing(@JsonProperty(value = "collectible", required = true) Collectible collectible, @JsonProperty(value = "usd", required = true) double usd) {
         this.collectible = collectible;
         this.usd = usd;
-        this.usdFoil = usdFoil;
     }
 
     public Long getId() {
@@ -52,14 +50,6 @@ public class Listing {
 
     public void setUsd(double usd) {
         this.usd = usd;
-    }
-
-    public double getUsdFoil() {
-        return usdFoil;
-    }
-
-    public void setUsdFoil(double usdFoil) {
-        this.usdFoil = usdFoil;
     }
 
 }
