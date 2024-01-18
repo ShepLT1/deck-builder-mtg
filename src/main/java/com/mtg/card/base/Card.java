@@ -1,8 +1,9 @@
 package com.mtg.card.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mtg.mana.Color;
+import com.mtg.card.collectible.Collectible;
 import com.mtg.deck.Deck;
+import com.mtg.mana.Color;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,9 +21,14 @@ public abstract class Card {
     @ManyToMany(mappedBy = "cardList")
     @JsonIgnore
     private List<Deck> deckList;
+    @ManyToOne
+    @JoinColumn(name = "dual_id", nullable=false)
     private Card dual;
     private Rarity rarity;
     private String imageUri;
+    @OneToMany(mappedBy="card")
+    @JsonIgnore
+    private List<Collectible> collectibles = new ArrayList<>();
 
     public Card() {
 
@@ -87,6 +93,14 @@ public abstract class Card {
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
+    }
+
+    public List<Collectible> getCollectibles() {
+        return collectibles;
+    }
+
+    public void setCollectibles(List<Collectible> collectibles) {
+        this.collectibles = collectibles;
     }
 
     public abstract List<Color> getColors();
