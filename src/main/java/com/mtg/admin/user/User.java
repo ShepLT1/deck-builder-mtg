@@ -55,7 +55,7 @@ public class User
     @JsonIgnore
     private Set<Deck> decks = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_collection",
             joinColumns = @JoinColumn(name = "user_id"),

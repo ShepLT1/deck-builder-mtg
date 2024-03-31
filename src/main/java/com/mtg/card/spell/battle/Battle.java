@@ -19,7 +19,7 @@ public class Battle extends Spell {
     public Battle() {}
 
     @JsonCreator
-    public Battle(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "defense", required = true) int defense, @JsonProperty(value = "rarity", required = true) Rarity rarity, @JsonProperty(value = "imageUri", required = true) String imageUri, @JsonProperty(value = "dual", required = true) Card dual) {
+    public Battle(@JsonProperty(value = "name", required = true) String name, String abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "defense", required = true) int defense, @JsonProperty(value = "rarity", required = true) Rarity rarity, @JsonProperty(value = "imageUri", required = true) String imageUri, @JsonProperty(value = "dual", required = true) Card dual) {
         super(name, abilities, manaCost, CardType.BATTLE, rarity, imageUri, dual);
         this.defense = defense;
     }

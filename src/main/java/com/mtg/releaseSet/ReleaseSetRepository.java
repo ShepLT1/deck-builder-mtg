@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReleaseSetRepository extends JpaRepository<ReleaseSet, Long> {
 
-    Page<ReleaseSet> findByName(String name, Pageable pageable);
+    Page<ReleaseSet> findByNameContains(String name, Pageable pageable);
+
+    ReleaseSet findByName(String name);
 
 }

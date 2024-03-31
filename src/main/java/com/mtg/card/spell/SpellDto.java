@@ -8,7 +8,7 @@ import java.util.List;
 public class SpellDto {
 
     private String name;
-    private List<String> abilities;
+    private String abilities;
     private List<Integer> manaCost;
     private CardType type;
     private Card dual;
@@ -26,11 +26,11 @@ public class SpellDto {
         this.name = name;
     }
 
-    public List<String> getAbilities() {
+    public String getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(List<String> abilities) {
+    public void setAbilities(String abilities) {
         this.abilities = abilities;
     }
 

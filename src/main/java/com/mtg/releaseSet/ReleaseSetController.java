@@ -16,7 +16,7 @@ public class ReleaseSetController {
     @GetMapping("")
     Page<ReleaseSet> all(@RequestParam(required=false) String name, Pageable pageable) {
         if (name != null) {
-            Page<ReleaseSet> setByName = releaseSetRepository.findByName(name, pageable);
+            Page<ReleaseSet> setByName = releaseSetRepository.findByNameContains(name, pageable);
             if (!setByName.hasContent()) {
                 throw new EntityNotFoundException(name, "set");
             }

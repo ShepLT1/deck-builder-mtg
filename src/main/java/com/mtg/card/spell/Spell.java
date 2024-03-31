@@ -14,7 +14,7 @@ import java.util.List;
 @Entity(name = "spells")
 public class Spell extends Card {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "spell_mana_symbol",
             joinColumns = @JoinColumn(name = "spell_id"),
@@ -26,7 +26,7 @@ public class Spell extends Card {
     }
 
     @JsonCreator
-    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) List<String> abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "type", required = true) CardType type, @JsonProperty(value = "rarity", required = true) Rarity rarity, @JsonProperty(value = "imageUri", required = true) String imageUri, Card dual) {
+    public Spell(@JsonProperty(value = "name", required = true) String name, @JsonProperty(value = "abilities", required = true) String abilities, @JsonProperty(value = "manaCost", required = true) List<ManaSymbol> manaCost, @JsonProperty(value = "type", required = true) CardType type, @JsonProperty(value = "rarity", required = true) Rarity rarity, @JsonProperty(value = "imageUri", required = true) String imageUri, Card dual) {
         super(name, abilities, rarity, imageUri, dual);
         manaCost.sort(new SortByType());
         manaCost.sort(new SortByColor());

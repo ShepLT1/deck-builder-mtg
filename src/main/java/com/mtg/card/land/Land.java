@@ -2,13 +2,12 @@ package com.mtg.card.land;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mtg.card.base.Card;
 import com.mtg.card.base.Rarity;
 import com.mtg.mana.Color;
-import com.mtg.card.base.Card;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,11 +19,11 @@ public class Land extends Card {
     public Land() {}
 
     public Land(String name, List<Color> colors, Rarity rarity) {
-        this(name, new ArrayList<>(), colors, rarity, null, null);
+        this(name, null, colors, rarity, null, null);
     }
 
     @JsonCreator
-    public Land(@JsonProperty(value = "name", required = true) String name, List<String> abilities, @JsonProperty(value = "colors", required = true) List<Color> colors, @JsonProperty(value = "rarity", required = true) Rarity rarity, String imageUri, Card dual) {
+    public Land(@JsonProperty(value = "name", required = true) String name, String abilities, @JsonProperty(value = "colors", required = true) List<Color> colors, @JsonProperty(value = "rarity", required = true) Rarity rarity, String imageUri, Card dual) {
         super(name, abilities, rarity, imageUri, dual);
         this.colors = colors;
     }

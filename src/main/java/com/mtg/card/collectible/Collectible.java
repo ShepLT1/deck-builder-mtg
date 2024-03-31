@@ -12,11 +12,11 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity(name="collectibles")
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"collectorNumber", "finish"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"card_id", "collectorNumber", "finish", "promo"}))
 public class Collectible {
 
     public enum Finish {
-        FOIL, NONFOIL;
+        ETCHED, FOIL, NONFOIL;
 
         @JsonCreator
         public static Finish fromText(String text) {
@@ -26,6 +26,26 @@ public class Collectible {
                 }
             }
             throw new IllegalArgumentException("Unaccepted Finish value. Excepted Finish values (case insensitive) = " + Arrays.toString(Finish.values()));
+        }
+
+        @Override
+        public String toString() {
+            return name();
+        }
+
+    }
+
+    public enum PromoType {
+        PRERELEASE, PROMOPACK;
+
+        @JsonCreator
+        public static PromoType fromText(String text) {
+            for (PromoType f : PromoType.values()) {
+                if (f.name().equals(text.toUpperCase())) {
+                    return f;
+                }
+            }
+            throw new IllegalArgumentException("Unaccepted PromoType value. Excepted PromoType values (case insensitive) = " + Arrays.toString(Finish.values()));
         }
 
         @Override
@@ -47,27 +67,29 @@ public class Collectible {
     @JoinColumn(name = "set_id", nullable=false)
     private ReleaseSet set;
     private Finish finish;
+    private PromoType promo;
     @OneToMany(mappedBy="collectible")
     @JsonIgnore
     private Set<Listing> listings;
-    private String imageUri;
+    private List<String> imageUris;
 
     public Collectible() {
     }
 
-    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set, Finish finish, String imageUri) {
-        this(card, users, collectorNumber, set, finish, new HashSet<>(), imageUri);
+    public Collectible(Card card, List<User> users, String collectorNumber, ReleaseSet set, Finish finish, PromoType promo, List<String> imageUris) {
+        this(card, users, collectorNumber, set, finish, promo, new HashSet<>(), imageUris);
     }
 
     @JsonCreator
-    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, @JsonProperty(value = "finish", required = true) Finish finish,  Set<Listing> listings, @JsonProperty(value = "imageUri", required = true) String imageUri) {
+    public Collectible(@JsonProperty(value = "card", required = true) Card card, List<User> users, @JsonProperty(value = "collectorNumber", required = true) String collectorNumber, @JsonProperty(value = "set", required = true) ReleaseSet set, @JsonProperty(value = "finish", required = true) Finish finish, PromoType promo, Set<Listing> listings, @JsonProperty(value = "imageUri", required = true) List<String> imageUris) {
         this.card = card;
         this.collectorNumber = collectorNumber;
         this.set = set;
         this.finish = finish;
+        this.promo = promo;
         this.users = Objects.requireNonNullElseGet(users, ArrayList::new);
         this.listings = Objects.requireNonNullElseGet(listings, HashSet::new);
-        this.imageUri = imageUri;
+        this.imageUris = imageUris;
     }
 
     public Long getId() {
@@ -114,6 +136,14 @@ public class Collectible {
         this.finish = finish;
     }
 
+    public PromoType getPromo() {
+        return promo;
+    }
+
+    public void setPromo(PromoType promo) {
+        this.promo = promo;
+    }
+
     public Set<Listing> getListings() {
         return listings;
     }
@@ -122,12 +152,12 @@ public class Collectible {
         this.listings = listings;
     }
 
-    public String getImageUri() {
-        return imageUri;
+    public List<String> getImageUris() {
+        return imageUris;
     }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
+    public void setImageUris(List<String> imageUri) {
+        this.imageUris = imageUri;
     }
 
 }

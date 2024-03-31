@@ -12,4 +12,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     List<Card> findByIdIn(List<Long> idList);
 
+    Card findByName(String name);
+
 }

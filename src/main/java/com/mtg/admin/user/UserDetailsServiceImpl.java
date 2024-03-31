@@ -7,11 +7,14 @@ import com.mtg.error.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user.getRoles().stream().anyMatch(role -> role.getName().name().equals("ROLE_ADMIN"));
     }
 
-    public List<Collectible> addOrRemoveCollectible(User user, Long collectible_id, Map<String, String> fields) {
+    public Page<Collectible> addOrRemoveCollectible(User user, Long collectible_id, Map<String, String> fields, Pageable pageable) {
         if (!fields.containsKey("action") || (!fields.get("action").equals("add") && !fields.get("action").equals("remove"))) {
             throw new IllegalArgumentException("request body must contain 'action' field with value equal to either 'add' or 'remove'");
         }
@@ -57,7 +60,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             user.removeCollectible(collectible);
         }
         userRepository.save(user);
-        return user.getCollection();
+        List<User> users = new ArrayList<>(List.of(user));
+        return collectibleRepository.findAllByUsersIn(users, pageable);
     }
 
 }

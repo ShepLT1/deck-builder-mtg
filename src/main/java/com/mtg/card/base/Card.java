@@ -5,6 +5,7 @@ import com.mtg.card.collectible.Collectible;
 import com.mtg.deck.Deck;
 import com.mtg.mana.Color;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,13 @@ public abstract class Card {
     protected @Id @GeneratedValue Long id;
     @Column(unique = true, name = "IX_NAME")
     private String name;
-    private List<String> abilities;
+    @Size(max = 1020)
+    private String abilities;
     @ManyToMany(mappedBy = "cardList")
     @JsonIgnore
-    private List<Deck> deckList;
+    private List<Deck> deckList  = new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "dual_id", nullable=false)
+    @JoinColumn(name = "dual_id")
     private Card dual;
     private Rarity rarity;
     private String imageUri;
@@ -34,10 +36,9 @@ public abstract class Card {
 
     }
 
-    public Card(String name, List<String> abilities, Rarity rarity, String imageUri, Card dual) {
+    public Card(String name, String abilities, Rarity rarity, String imageUri, Card dual) {
         this.name = name;
         this.abilities = abilities;
-        this.deckList = new ArrayList<>();
         this.rarity = rarity;
         this.imageUri = imageUri;
         this.dual = dual;
@@ -63,11 +64,11 @@ public abstract class Card {
         this.name = name;
     }
 
-    public List<String> getAbilities() {
+    public String getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(List<String> abilities) {
+    public void setAbilities(String abilities) {
         this.abilities = abilities;
     }
 
